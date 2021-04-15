@@ -15,6 +15,22 @@
         tools:layout_editor_absoluteX="175dp"
         tools:layout_editor_absoluteY="393dp">
 
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/container"
+            android:layout_height="200dp"
+            android:layout_width="200dp" />
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridView"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:columnWidth="90dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center" />
+
 
         <LinearLayout
             android:layout_width="240dp"

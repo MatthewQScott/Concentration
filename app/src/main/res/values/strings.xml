@@ -13,4 +13,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="card_back_title">hello there</string>
+    <string name="card_back_description">hi my friends</string>
+    <string name="description_image_1">image 1s descirption yes</string>
 </resources>
