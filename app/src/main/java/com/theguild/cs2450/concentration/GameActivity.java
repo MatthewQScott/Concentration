@@ -15,86 +15,70 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
-
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class GameActivity extends FragmentActivity {
 
     private Button mBackButton;
-    private boolean showingBack = true;
-
-    public static class CardFrontFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_card_front, container, false);
-
-        }
-    }
-
-    public static class CardBackFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_card_back, container, false);
-        }
-    }
-
+    private int mTurnedCard1;
+    private int mTurnedCard2;
+    private boolean mCardFlippingEnabled = true;
+    private TextView mScoreTextView;
+    private int score = 0;
+    private ImageAdapter myImageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-
          GridView gridView = (GridView) findViewById(R.id.gridView);
-        gridView.setAdapter(new ImageAdapter(this));
+         myImageAdapter = new ImageAdapter(this);
+         /*Integer[] intArray = {
+                 R.drawable.dice_1, R.drawable.dice_2,
+         };
+         myImageAdapter.mThumbIds = intArray;*/
+         gridView.setAdapter(myImageAdapter);
 
+        mScoreTextView = (TextView) findViewById(R.id.score_text_view);
 
-            if (savedInstanceState == null) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.container, new CardFrontFragment())
-                        .commit();
+         mBackButton = (Button) findViewById(R.id.back_button);
+         mBackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   finish();
+                }
+         });
+    }
 
-            }
-
-             mBackButton = (Button) findViewById(R.id.back_button);
-             mBackButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                       // finish();
-                        showingBack = !showingBack;
-                        flipCard();
-
-                    }
-                });
-
-
-}
-
-
-
-    private void flipCard() {
-        if (showingBack) {
-            getSupportFragmentManager().popBackStack();
-            return;
+    public void setTurnedCard(int card) {
+        if (mTurnedCard1 == 0) {
+            mTurnedCard1 = card;
+        } else if (mTurnedCard1 != 0 && mTurnedCard2 == 0) {
+            mTurnedCard2 = card;
+        } else {
+           // mCardFlippingEnabled = false;
         }
+        compareFlippedCards();
+        System.out.println((mTurnedCard1 == 0) + " " + (mTurnedCard2 == 0));
+        System.out.println("compareFlipped called");
+    }
 
-        getSupportFragmentManager()
-                .beginTransaction()
+    public boolean getCardFlippingEnabled() {
+        return mCardFlippingEnabled;
+    }
 
-                .setCustomAnimations(
-                        R.animator.card_flip_right_in,
-                        R.animator.card_flip_right_out,
-                        R.animator.card_flip_left_in,
-                        R.animator.card_flip_left_out)
+    public void compareFlippedCards() {
+        if (mTurnedCard1 == 0 || mTurnedCard2 == 0){}
+        else if (myImageAdapter.mThumbIds[mTurnedCard1] == myImageAdapter.mThumbIds[mTurnedCard2]) {
+            System.out.println("weeeeeeeeeeeeeeee");
+            score++;
+            mScoreTextView.setText("" + score);
 
-                .replace(R.id.container, new CardBackFragment())
+        } else {
 
-                .addToBackStack(null)
-
-                .commit();
-
+        }
     }
 }

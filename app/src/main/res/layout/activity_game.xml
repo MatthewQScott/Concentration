@@ -15,21 +15,24 @@
         tools:layout_editor_absoluteX="175dp"
         tools:layout_editor_absoluteY="393dp">
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/container"
-            android:layout_height="200dp"
-            android:layout_width="200dp" />
+        <TextView
+            android:id="@+id/score_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="TextView" />
 
-        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        <GridView
             android:id="@+id/gridView"
             android:layout_width="fill_parent"
-            android:layout_height="200dp"
+            android:layout_height="415dp"
             android:columnWidth="90dp"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="10dp"
+            android:gravity="center"
             android:horizontalSpacing="10dp"
+            android:numColumns="auto_fit"
             android:stretchMode="columnWidth"
-            android:gravity="center" />
+            android:verticalSpacing="10dp" />
 
 
         <LinearLayout
@@ -38,14 +41,11 @@
             android:orientation="vertical"
             android:translationY="-20dp">
 
-            <TextView
-                android:id="@+id/highscores_text_view"
+            <Button
+                android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="TO BE IMPLEMENTED"
-                android:textAlignment="center"
-                android:textSize="25dp" />
+                android:text="reset Button" />
 
             <Button
                 android:id="@+id/back_button"
