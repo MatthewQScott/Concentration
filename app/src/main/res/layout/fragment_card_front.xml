@@ -1,0 +1,10 @@
+
+<!--This code isn't necessary right now but I want to later format the card
+    front and back in an xml file-->
+
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="fitCenter"
+    android:padding="80dp"
+    android:contextDescription="@string/description_image_1" />
