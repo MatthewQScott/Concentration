@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="card_flip_time_half">400</integer>
+    <integer name="card_flip_time_full">800</integer>
+    <integer name="high_score_1">9999</integer>
+    <integer name="high_score_2">9999</integer>
+    <integer name="high_score_3">9999</integer>
+</resources>
