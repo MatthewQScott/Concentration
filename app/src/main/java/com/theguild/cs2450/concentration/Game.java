@@ -21,6 +21,7 @@ public class Game {
         mScore = 0;
 
         mGameActivity = (GameActivity) c;
+        System.out.println("test");
         mNumberOfCards = numberOfCards;
 
         mNumberOfCards = 8;
