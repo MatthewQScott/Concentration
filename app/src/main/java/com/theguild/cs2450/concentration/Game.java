@@ -8,6 +8,7 @@ import static android.util.Log.d;
 
 public class Game {
 
+    private AudioPlayer audio;
     private GameActivity mGameActivity;
     private ImageAdapter mImageAdapter;
     private Card mTurnedCard1;
@@ -18,6 +19,7 @@ public class Game {
     private int mScore;
 
     public Game (Context c, int numberOfCards) {
+        //audio.playMusic(c);
         mScore = 0;
 
         mGameActivity = (GameActivity) c;

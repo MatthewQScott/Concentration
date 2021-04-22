@@ -11,6 +11,7 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
+    AudioPlayer audio;
     private Button mPlayButton;
     private Button mHighScoresButton;
     private Button mMusicButton;
@@ -23,15 +24,15 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-
+        if (audio == null) {
+            audio = new AudioPlayer();
+            audio.playMusic(MenuActivity.this);
+        }
 
         mPlayButton = (Button) findViewById(R.id.play_button);
         mPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intent = new Intent(MenuActivity.this, GameActivity.class);
                 startActivity(intent);
             }
@@ -46,10 +47,25 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        mMusicButton = (Button) findViewById(R.id.music_button);
 
+        mMusicButton.setOnClickListener(new View.OnClickListener() {
+            public boolean musicEnabled = true;
 
-
-
+            @Override
+            public void onClick(View v) {
+                if (musicEnabled) {
+                    audio.stopMusic();
+                    musicEnabled = false;
+                    mMusicButton.setText("Enable Music");
+                }
+                else {
+                    audio.playMusic(MenuActivity.this);
+                    musicEnabled = true;
+                    mMusicButton.setText("Disable Music");
+                }
+            }
+        });
 
     }
 
