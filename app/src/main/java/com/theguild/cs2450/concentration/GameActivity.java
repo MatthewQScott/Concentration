@@ -24,8 +24,6 @@ public class GameActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-
-
          mGame = new Game(this, mNumberOfCards);
          mImageAdapter = new ImageAdapter(this);
          mGame.setImageAdapter(mImageAdapter);
@@ -48,11 +46,10 @@ public class GameActivity extends FragmentActivity {
         mTryAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mGame.tryAgain();
             }
         });
     }
-
 
     public void setScore(int score) {
         mScoreTextView.setText("Your Score: " + score);

@@ -3,19 +3,19 @@ package com.theguild.cs2450.concentration;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class Card {
 
-    private static Integer mCardBack = R.drawable.a_back;
     private GameActivity mGameActivity;
     private Game mGame;
+    private static Integer mCardBack = R.drawable.a_back;
     private Integer mCardFront;
     private Integer mCurrentFacing;
     private ImageView mImageView;
+    private boolean mFlippingLocked = false;
 
     // not all are used depending on the number of cards
     public Integer[] mThumbIds = {
@@ -43,77 +43,95 @@ public class Card {
         mImageView.setLayoutParams(new ViewGroup.LayoutParams(250, 350));
         mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mImageView.setPadding(20,20,20,20);
-        setFlipAction();
+        addFlipListener();
     }
 
     public View getView() {
         return mImageView;
     }
 
-    private void setFlipAction() {
+    private void addFlipListener() {
         mImageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                System.out.println("\t\t" + mGame.getCardFlippingEnabled());
+                System.out.println("\t\t" + mFlippingLocked);
+                System.out.println("\t\t" + this);
 
-                Animator leftIn;
-                Animator leftOut;
-                Animator rightIn;
-                Animator rightOut;
-                leftIn = AnimatorInflater.loadAnimator(mGameActivity,
-                        R.animator.card_flip_left_in);
-                leftOut = AnimatorInflater.loadAnimator(mGameActivity,
-                        R.animator.card_flip_left_out);
-                rightIn = AnimatorInflater.loadAnimator(mGameActivity,
-                        R.animator.card_flip_right_in);
-                rightOut = AnimatorInflater.loadAnimator(mGameActivity,
-                        R.animator.card_flip_right_out);
 
-                AnimatorSet set = new AnimatorSet();
-
-                Animator.AnimatorListener listener = new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) { }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        if (mCurrentFacing == mCardBack) {
-                            mCurrentFacing = mCardFront;
-                            mImageView.setImageResource(mCardFront);
-                        } else {
-                            mCurrentFacing = mCardBack;
-                            mImageView.setImageResource(mCardBack);
-                        }
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {}
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {}
-                };
-                leftOut.addListener(listener);
-                rightOut.addListener(listener);
-
-                if (mCurrentFacing == mCardFront) {
-                    set.playSequentially(leftOut, leftIn);
-                } else {
-                    set.playSequentially(rightOut, rightIn);
-                }
-
-                set.setTarget(v);
-                mGame.setTurnedCard(Card.this);
-
-                if (mGame.getCardFlippingEnabled()) {
-                    set.start();
-
+                if (mGame.getCardFlippingEnabled() && mFlippingLocked == false) {
+                    flipCard(v);
                 }
             }
         });
+    }
+
+
+
+    public void flipCard(View v) {
+
+        Animator leftIn;
+        Animator leftOut;
+        Animator rightIn;
+        Animator rightOut;
+        leftIn = AnimatorInflater.loadAnimator(mGameActivity,
+                R.animator.card_flip_left_in);
+        leftOut = AnimatorInflater.loadAnimator(mGameActivity,
+                R.animator.card_flip_left_out);
+        rightIn = AnimatorInflater.loadAnimator(mGameActivity,
+                R.animator.card_flip_right_in);
+        rightOut = AnimatorInflater.loadAnimator(mGameActivity,
+                R.animator.card_flip_right_out);
+
+        AnimatorSet set = new AnimatorSet();
+
+        Animator.AnimatorListener listener = new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (mCurrentFacing == mCardBack) {
+                    mCurrentFacing = mCardFront;
+                    mImageView.setImageResource(mCardFront);
+                } else {
+                    mCurrentFacing = mCardBack;
+                    mImageView.setImageResource(mCardBack);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        };
+        leftOut.addListener(listener);
+        rightOut.addListener(listener);
+
+        if (mCurrentFacing == mCardFront) {
+            set.playSequentially(leftOut, leftIn);
+        } else {
+            set.playSequentially(rightOut, rightIn);
+        }
+
+        set.setTarget(Card.this.mImageView);
+        mGame.setCardAsSelected(Card.this);
+
+        set.start();
+
 
     }
 
     public Integer getCardFront() {
         return mCardFront;
+    }
+
+    public void lockCard() {
+        mFlippingLocked = true;
     }
 }
