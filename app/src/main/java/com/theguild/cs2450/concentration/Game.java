@@ -3,6 +3,7 @@ package com.theguild.cs2450.concentration;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static android.util.Log.d;
 
@@ -14,39 +15,33 @@ public class Game {
     private Card mTurnedCard1;
     private Card mTurnedCard2;
     private int mNumberOfCards;
-    private Card mCardArray[];
+    private ArrayList<Card> mCardList;
     private boolean mCardFlippingEnabled = true;
     private int mScore;
 
     public Game (Context c, int numberOfCards) {
         //audio.playMusic(c);
+        mGameActivity = (GameActivity) c;
+        mNumberOfCards = numberOfCards;
         mScore = 0;
 
-        mGameActivity = (GameActivity) c;
-        System.out.println("test");
-        mNumberOfCards = numberOfCards;
-
-        mNumberOfCards = 8;
-        ArrayList<Card> bag = new ArrayList<>();
-
-        for (int index = 0; index < (mNumberOfCards / 2); index++) {
-            bag.add(new Card(Game.this, index));
-            bag.add(new Card(Game.this, index));
-        }
-
-        mCardArray = new Card[mNumberOfCards];
-        int index = 0;
-        int randBagIndex;
-
-        do {
-            randBagIndex = (int) Math.random() % bag.size();
-
-            mCardArray[index] = bag.remove(randBagIndex);
-
-            index++;
-        } while (bag.isEmpty() == false);
+        fillCardPairList();
 
     }
+
+    private void fillCardPairList() {
+        mNumberOfCards = 8;
+        mCardList = new ArrayList<>();
+
+        for (int count = 0; count < (mNumberOfCards / 2); count++) {
+            int randCardIndex = (int) (Math.random() * Card.getCardListSize());
+            System.out.println(randCardIndex + "RRRRRRRRR");
+            mCardList.add(new Card(Game.this, randCardIndex));
+            mCardList.add(new Card(Game.this, randCardIndex));
+        }
+        Collections.shuffle(mCardList);
+    }
+
 
     public void setCardAsSelected(Card card) {
         if (mTurnedCard1 == null) {
@@ -74,7 +69,9 @@ public class Game {
             mTurnedCard2 = null;
             mCardFlippingEnabled = true;
         } else {
-            mScore -= 1;
+            if (mScore > 0) {
+                mScore -= 1;
+            }
         }
         mGameActivity.setScore(mScore);
 
@@ -99,7 +96,7 @@ public class Game {
     }
 
     public Card getCardAt(int index) {
-        return mCardArray[index];
+        return mCardList.get(index);
     }
 
     public GameActivity getGameActivity() {
