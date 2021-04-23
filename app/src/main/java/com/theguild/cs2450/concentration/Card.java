@@ -18,7 +18,7 @@ public class Card {
     private boolean mFlippingLocked = false;
 
     // not all are used depending on the number of cards
-    public Integer[] mThumbIds = {
+    private static Integer[] mThumbIds = {
             R.drawable.a_1, R.drawable.a_2,
             R.drawable.a_3, R.drawable.a_4,
             R.drawable.a_5, R.drawable.a_6,
@@ -67,7 +67,9 @@ public class Card {
         });
     }
 
-
+    public static int getCardListSize() {
+        return mThumbIds.length;
+    }
 
     public void flipCard(View v) {
 
