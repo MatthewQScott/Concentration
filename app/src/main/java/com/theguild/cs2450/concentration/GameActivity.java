@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 
 public class GameActivity extends FragmentActivity {
-
+    private AudioPlayer audio;
     private Button mBackButton;
     private Button mTryAgainButton;
     private ImageAdapter mImageAdapter;
