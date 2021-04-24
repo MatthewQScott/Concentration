@@ -15,7 +15,7 @@ public class Card {
     private Integer mCardFront;
     private Integer mCurrentFacing;
     private ImageView mImageView;
-    private boolean mFlippingLocked = false;
+    private boolean mCardLocked = false;
 
     // not all are used depending on the number of cards
     private static Integer[] mThumbIds = {
@@ -24,11 +24,6 @@ public class Card {
             R.drawable.a_5, R.drawable.a_6,
             R.drawable.a_7, R.drawable.a_8,
             R.drawable.a_9, R.drawable.a_10,
-            R.drawable.a_1, R.drawable.a_2,
-            R.drawable.a_3, R.drawable.a_4,
-            R.drawable.a_5, R.drawable.a_6,
-            R.drawable.a_7, R.drawable.a_8,
-            R.drawable.a_9, R.drawable.a_10
     };
 
     public Card(Game g, int index) {
@@ -39,8 +34,10 @@ public class Card {
         mImageView = new ImageView(mGameActivity);
 
         // I need to put this layout information in an xml file
+
+       // mImageView.setLayoutParams(new ViewGroup.LayoutParams(187, 263));
         mImageView.setImageResource(mCurrentFacing);
-        mImageView.setLayoutParams(new ViewGroup.LayoutParams(250, 350));
+        mImageView.setLayoutParams(new ViewGroup.LayoutParams(150, 250));
         mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mImageView.setPadding(20,20,20,20);
         addFlipListener();
@@ -55,12 +52,8 @@ public class Card {
 
             @Override
             public void onClick(View v) {
-                System.out.println("\t\t" + mGame.getCardFlippingEnabled());
-                System.out.println("\t\t" + mFlippingLocked);
-                System.out.println("\t\t" + this);
-
-
-                if (mGame.getCardFlippingEnabled() && mFlippingLocked == false) {
+                if (mGame.getCardFlippingEnabled() && mCardLocked == false &&
+                        mCurrentFacing == mCardBack) {
                     flipCard(v);
                 }
             }
@@ -122,7 +115,8 @@ public class Card {
         }
 
         set.setTarget(Card.this.mImageView);
-        mGame.setCardAsSelected(Card.this);
+
+        mGame.selectCard(Card.this);
 
         set.start();
 
@@ -133,7 +127,11 @@ public class Card {
         return mCardFront;
     }
 
+    public boolean isCardLocked() {
+        return mCardLocked;
+    }
+
     public void lockCard() {
-        mFlippingLocked = true;
+        mCardLocked = true;
     }
 }

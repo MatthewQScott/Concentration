@@ -17,4 +17,11 @@
     <string name="card_back_title">hello there</string>
     <string name="card_back_description">hi my friends</string>
     <string name="description_image_1">image 1s descirption yes</string>
+    <string name="username">First Last</string>
+    <string name="enter">Enter</string>
+    <string name="name_prompt_message">Enter your name to save your score:</string>
+    <string name="name_prompt_title">Enter Name:</string>
+    <string name="dialog_message">testing testing</string>
+    <string name="dialog_title">testing</string>
+    <string name="choose_card_number">Number of Cards</string>
 </resources>

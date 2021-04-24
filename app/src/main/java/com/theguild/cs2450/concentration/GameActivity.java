@@ -1,5 +1,7 @@
 package com.theguild.cs2450.concentration;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
@@ -11,26 +13,34 @@ import android.widget.TextView;
 
 
 public class GameActivity extends FragmentActivity {
-    private AudioPlayer audio;
     private Button mBackButton;
     private Button mTryAgainButton;
     private ImageAdapter mImageAdapter;
     private Game mGame;
-    private int mNumberOfCards = 8;
     private TextView mScoreTextView;
+    private int mNumberOfCards = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-         mGame = new Game(this, mNumberOfCards);
-         mImageAdapter = new ImageAdapter(this);
-         mGame.setImageAdapter(mImageAdapter);
-         mImageAdapter.setGame(mGame);
 
-         GridView gridView = (GridView) findViewById(R.id.gridView);
-         gridView.setAdapter(mImageAdapter);
+        CharSequence[] possCardAmounts = { "4", "6", "8", "10", "12", "14", "16", "18", "20" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        builder.setTitle(R.string.choose_card_number)
+                .setItems(possCardAmounts, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mNumberOfCards = Integer.parseInt(possCardAmounts[which].toString());
+                       // System.out.println(mNumberOfCards + " cards were chosen");
+                        createGame();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+
 
          mScoreTextView = (TextView) findViewById(R.id.score_text_view);
 
@@ -51,12 +61,24 @@ public class GameActivity extends FragmentActivity {
         });
     }
 
+    private void createGame() {
+
+        mGame = new Game(this, mNumberOfCards);
+        mImageAdapter = new ImageAdapter(this);
+        mGame.setImageAdapter(mImageAdapter);
+        mImageAdapter.setGame(mGame);
+
+        GridView gridView = (GridView) findViewById(R.id.gridView);
+        if (mNumberOfCards >= 12)
+            gridView.setNumColumns(5);
+        else if (mNumberOfCards >= 6)
+            gridView.setNumColumns(4);
+        gridView.setAdapter(mImageAdapter);
+
+    }
+
     public void setScore(int score) {
         mScoreTextView.setText("Your Score: " + score);
     }
 
-    private void writeScoreToFile() {
-        // I don't know if it makes more sense to write the score-saving code here
-        // or in the Game.java class. Do what you think's best
-    }
 }

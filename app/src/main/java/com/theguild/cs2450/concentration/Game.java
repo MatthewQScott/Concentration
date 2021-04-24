@@ -1,41 +1,70 @@
 package com.theguild.cs2450.concentration;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Timer;
 
 import static android.util.Log.d;
 
 public class Game {
 
-    private AudioPlayer audio;
     private GameActivity mGameActivity;
     private ImageAdapter mImageAdapter;
+    private ArrayList<Card> mCardList;
     private Card mTurnedCard1;
     private Card mTurnedCard2;
     private int mNumberOfCards;
-    private ArrayList<Card> mCardList;
-    private boolean mCardFlippingEnabled = true;
     private int mScore;
+    private boolean mCardFlippingEnabled = true;
+    private String mUsername;
+
 
     public Game (Context c, int numberOfCards) {
-        //audio.playMusic(c);
         mGameActivity = (GameActivity) c;
         mNumberOfCards = numberOfCards;
         mScore = 0;
 
-        fillCardPairList();
 
+
+        fillRandCardList();
+        resizeCards();
     }
 
-    private void fillCardPairList() {
-        mNumberOfCards = 8;
+    private void resizeCards() {
+        ViewGroup.LayoutParams params;
+        if (mNumberOfCards >= 16)
+            params = new ViewGroup.LayoutParams(150, 250);
+        else
+            params = new ViewGroup.LayoutParams(250, 350);
+
+
+
+        for (int i = 0; i < mCardList.size(); i++) {
+           View view = mCardList.get(i).getView();
+            view.setLayoutParams(params);
+        }
+    }
+
+    private void fillRandCardList() {
         mCardList = new ArrayList<>();
+        ArrayList<Integer> indexes = new ArrayList<>();
+        for (int index = 0; index < 10; index += 1)
+            indexes.add(index);
+
 
         for (int count = 0; count < (mNumberOfCards / 2); count++) {
-            int randCardIndex = (int) (Math.random() * Card.getCardListSize());
-            System.out.println(randCardIndex + "RRRRRRRRR");
+            int randCardIndex = (int) (Math.random() * indexes.size());
+            randCardIndex = indexes.remove(randCardIndex);
             mCardList.add(new Card(Game.this, randCardIndex));
             mCardList.add(new Card(Game.this, randCardIndex));
         }
@@ -43,24 +72,53 @@ public class Game {
     }
 
 
-    public void setCardAsSelected(Card card) {
+    public void selectCard(Card card) {
         if (mTurnedCard1 == null) {
             mTurnedCard1 = card;
-            System.out.println("mTurnedCard1AA" + mTurnedCard1);
         } else if (mTurnedCard2 == null) {
             mTurnedCard2 = card;
             mCardFlippingEnabled = false;
-            compareFlippedCards();
-            System.out.println("mTurnedCard1" + mTurnedCard1);
-            System.out.println("mTurnedCard2" + mTurnedCard2);
+            compareSelectedCards();
+            if (isGameOver()) {
+                endGame();
+            }
         }
     }
 
-    public boolean getCardFlippingEnabled() {
-        return mCardFlippingEnabled;
+    private void endGame() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getGameActivity());
+
+        LayoutInflater inflater = getGameActivity().getLayoutInflater();
+        View dialogLayout = inflater.inflate(R.layout.dialog_name_prompt, null);
+        TextView mNameEditText = dialogLayout.findViewById(R.id.username_edit_view);
+        builder.setView(dialogLayout)
+
+            .setPositiveButton(R.string.enter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mUsername = mNameEditText.getText().toString();
+                    saveHighScore(mUsername, mScore);
+                }
+            });
+
+        builder.setMessage(R.string.name_prompt_message)
+                .setTitle(R.string.name_prompt_title);
+        
+
+        AlertDialog dialog = builder.create();
+        dialog.findViewById(R.id.username_edit_view);
+        dialog.show();
+
     }
 
-    public void compareFlippedCards() {
+    private void saveHighScore(String username, int score) {
+
+
+        getGameActivity().finish();
+    }
+
+    public void compareSelectedCards() {
         if (mTurnedCard1.getCardFront().equals(mTurnedCard2.getCardFront())) {
             mScore += 2;
             mTurnedCard1.lockCard();
@@ -74,11 +132,16 @@ public class Game {
             }
         }
         mGameActivity.setScore(mScore);
-
     }
 
-    public void setImageAdapter(ImageAdapter i) {
-        mImageAdapter = i;
+    private boolean isGameOver() {
+        boolean isOver = true;
+        for (Card card: mCardList) {
+            if (card.isCardLocked() == false) {
+                isOver = false;
+            }
+        }
+        return isOver;
     }
 
     public void tryAgain() {
@@ -89,6 +152,14 @@ public class Game {
         mTurnedCard1 = null;
         mTurnedCard2 = null;
         mCardFlippingEnabled = true;
+    }
+
+    public boolean getCardFlippingEnabled() {
+        return mCardFlippingEnabled;
+    }
+
+    public void setImageAdapter(ImageAdapter i) {
+        mImageAdapter = i;
     }
 
     public int getNumberOfCards() {
