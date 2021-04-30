@@ -21,11 +21,14 @@ public class Game {
     private GameActivity mGameActivity;
     private ImageAdapter mImageAdapter;
     private ArrayList<Card> mCardList;
+    private ArrayList<Integer> mIndexList;
     private Card mTurnedCard1;
     private Card mTurnedCard2;
     private int mNumberOfCards;
     private int mScore;
     private boolean mCardFlippingEnabled = true;
+    public boolean mGameComplete = false;
+    public boolean mTryButtonFlash = false;
     private String mUsername;
 
 
@@ -127,6 +130,7 @@ public class Game {
             mTurnedCard2 = null;
             mCardFlippingEnabled = true;
         } else {
+            mTryButtonFlash = true;
             if (mScore > 0) {
                 mScore -= 1;
             }

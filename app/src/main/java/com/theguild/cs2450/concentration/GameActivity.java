@@ -13,11 +13,13 @@ import android.widget.TextView;
 
 
 public class GameActivity extends FragmentActivity {
+    private boolean mFlashCondition = true;
     private Button mBackButton;
     private Button mTryAgainButton;
     private ImageAdapter mImageAdapter;
     private Game mGame;
     private TextView mScoreTextView;
+    private Thread flashThread;
     private int mNumberOfCards = 8;
 
     @Override
@@ -35,6 +37,7 @@ public class GameActivity extends FragmentActivity {
                         mNumberOfCards = Integer.parseInt(possCardAmounts[which].toString());
                        // System.out.println(mNumberOfCards + " cards were chosen");
                         createGame();
+                        buttonFlash();
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -48,7 +51,8 @@ public class GameActivity extends FragmentActivity {
          mBackButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   finish();
+                    mFlashCondition = false;
+                    finish();
                 }
          });
 
@@ -56,9 +60,36 @@ public class GameActivity extends FragmentActivity {
         mTryAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mGame.mTryButtonFlash = false;
                 mGame.tryAgain();
             }
         });
+    }
+
+    private void buttonFlash() {
+        android.view.animation.Animation anim = new android.view.animation.AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(450);
+        anim.setStartOffset(20);
+        anim.setRepeatMode(android.view.animation.Animation.REVERSE);
+        anim.setRepeatCount(android.view.animation.Animation.INFINITE);
+
+        flashThread = new Thread() {
+            public void run() {
+                while (mFlashCondition) {
+                    while (mGame.mTryButtonFlash) {
+                        mTryAgainButton.startAnimation(anim);
+                        try {
+                            flashThread.sleep(750);
+                        }
+                        catch (InterruptedException e) {
+
+                        }
+                    }
+                    anim.cancel();
+                }
+            }
+        };
+        flashThread.start();
     }
 
     private void createGame() {
