@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,8 +117,10 @@ public class Game {
     }
 
     private void saveHighScore(String username, int score) {
-
-
+        SharedPreferences prefs = getGameActivity().getSharedPreferences("PREFS", 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Score", mScore);
+        editor.apply();
         getGameActivity().finish();
     }
 
