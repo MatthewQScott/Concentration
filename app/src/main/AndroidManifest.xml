@@ -10,7 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Concentration">
-        <activity android:name=".HighScoresActivity" />
         <activity
             android:name=".GameActivity"
             android:label="@string/title_activity_game"
@@ -22,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HighScoresActivity" />
     </application>
 
 </manifest>
