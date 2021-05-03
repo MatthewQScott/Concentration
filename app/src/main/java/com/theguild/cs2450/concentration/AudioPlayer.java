@@ -1,21 +1,40 @@
 package com.theguild.cs2450.concentration;
 
-public class AudioPlayer {
-    private android.media.MediaPlayer mp = new android.media.MediaPlayer();
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 
-    public void playMusic(android.content.Context c) {
-        if (mp == null) {
-            mp = new android.media.MediaPlayer();
-        }
+import androidx.annotation.Nullable;
 
-        mp = android.media.MediaPlayer.create(c, R.raw.music);
-        mp.start();
+public class AudioPlayer extends android.app.IntentService {
+
+    public AudioPlayer() {
+        super("AudioPlayer");
     }
 
-    public void stopMusic() {
-        if (mp != null) {
-            mp.release();
-            mp = null;
-        }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return Service.START_STICKY;
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+        String action = intent.getAction();
+    }
+
+    @Override
+    public void onCreate() {
+        AudioTasks.playMusic(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        AudioTasks.stopMusic();
     }
 }

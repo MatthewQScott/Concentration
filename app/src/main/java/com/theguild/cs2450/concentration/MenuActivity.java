@@ -24,10 +24,10 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        if (audio == null) {
-            audio = new AudioPlayer();
-            audio.playMusic(MenuActivity.this);
-        }
+
+        Intent musicIntent = new Intent(this, AudioPlayer.class);
+        musicIntent.setAction(null);
+        startService(musicIntent);
 
         mPlayButton = (Button) findViewById(R.id.play_button);
         mPlayButton.setOnClickListener(new View.OnClickListener() {
@@ -54,22 +54,18 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (musicEnabled) {
-                    audio.stopMusic();
-                    musicEnabled = false;
+                if (!AudioTasks.musicPaused) {
+                    stopService(musicIntent);
+                    AudioTasks.musicPaused = true;
                     mMusicButton.setText("Enable Music");
                 }
                 else {
-                    audio.playMusic(MenuActivity.this);
-                    musicEnabled = true;
+                    startService(musicIntent);
+                    AudioTasks.musicPaused = false;
                     mMusicButton.setText("Disable Music");
                 }
             }
         });
 
     }
-
-
-
-
 }
