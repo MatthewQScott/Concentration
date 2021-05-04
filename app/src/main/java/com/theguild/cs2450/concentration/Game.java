@@ -118,9 +118,12 @@ public class Game {
 
     private void saveHighScore(String username, int score) {
         SharedPreferences prefs = getGameActivity().getSharedPreferences("PREFS", 0);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("Score", mScore);
-        editor.apply();
+        /*SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("Name", username);
+        //editor.apply();
+        editor.putInt("Score", score);
+        editor.apply();*/
+        HighScoresActivity.updateScores(username, score, prefs);
         getGameActivity().finish();
     }
 

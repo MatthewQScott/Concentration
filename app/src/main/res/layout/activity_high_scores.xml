@@ -11,13 +11,22 @@
     tools:context=".HighScoresActivity">
 
     <TextView
-        android:id = "@+id/textViewScore"
+        android:id="@+id/textViewScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:fontFamily="casual"
+        android:gravity="center"
+        android:text=""
         android:textColor="@color/white"
-        android:textSize="60sp"
-        android:text=""/>
+        android:textSize="36sp" />
+
+    <Button
+        android:id="@+id/hs_back_button"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:text="BACK"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/cardview_dark_background" />
 
 </LinearLayout>
