@@ -33,9 +33,6 @@ public class Card {
         mGameActivity = mGame.getGameActivity();
         mImageView = new ImageView(mGameActivity);
 
-        // I need to put this layout information in an xml file
-
-       // mImageView.setLayoutParams(new ViewGroup.LayoutParams(187, 263));
         mImageView.setImageResource(mCurrentFacing);
         mImageView.setLayoutParams(new ViewGroup.LayoutParams(150, 250));
         mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -58,10 +55,6 @@ public class Card {
                 }
             }
         });
-    }
-
-    public static int getCardListSize() {
-        return mThumbIds.length;
     }
 
     public void flipCard(View v) {

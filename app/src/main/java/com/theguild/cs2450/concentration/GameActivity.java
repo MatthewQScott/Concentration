@@ -31,6 +31,7 @@ public class GameActivity extends FragmentActivity {
         CharSequence[] possCardAmounts = { "4", "6", "8", "10", "12", "14", "16", "18", "20" };
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
         builder.setTitle(R.string.choose_card_number)
+                .setCancelable(false)
                 .setItems(possCardAmounts, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

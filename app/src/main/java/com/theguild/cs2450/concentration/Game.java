@@ -107,7 +107,8 @@ public class Game {
             });
 
         builder.setMessage(R.string.name_prompt_message)
-                .setTitle(R.string.name_prompt_title);
+                .setTitle(R.string.name_prompt_title)
+                .setCancelable(false);
         
 
         AlertDialog dialog = builder.create();
