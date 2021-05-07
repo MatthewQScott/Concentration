@@ -22,14 +22,6 @@ public class HighScoresActivity extends AppCompatActivity {
     TextView textViewScore;
 
     @Override
-    public void onBackPressed()
-    {
-        Intent i = new Intent(getApplicationContext(), Game.class);
-        startActivity(i);
-        finish();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
