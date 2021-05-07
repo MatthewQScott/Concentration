@@ -14,15 +14,15 @@ import java.util.ArrayList;
 public class ImageAdapter extends BaseAdapter {
 
     private GameActivity mGameActivity;
-    private ArrayList<Integer> mCardFronts;
+    private ImageView[] mCardImageViews;
 
-    public ImageAdapter(Context c, ArrayList<Integer> cardList) {
+    public ImageAdapter(Context c, ImageView[] cardImageViews) {
         mGameActivity = (GameActivity) c;
-        mCardFronts = cardList;
+        mCardImageViews = cardImageViews;
     }
 
     public int getCount() {
-        return mCardFronts.size();
+        return mCardImageViews.length;
     }
 
     public Object getItem(int position) {
@@ -34,19 +34,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        ImageView imageView;
-        if (convertView == null) {
-            imageView = new ImageView(mGameActivity);
-
-            imageView.setImageResource(mCardFronts.get(position));
-        } else {
-            imageView = (ImageView) convertView;
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
-            convertView.setLayoutParams(new GridView.LayoutParams(params));
-        }
-
-        return imageView;
+        return mCardImageViews[position];
     }
 
 

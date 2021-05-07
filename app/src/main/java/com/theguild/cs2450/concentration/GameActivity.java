@@ -2,16 +2,16 @@ package com.theguild.cs2450.concentration;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
@@ -26,8 +26,105 @@ public class GameActivity extends FragmentActivity {
     private Button mTryAgainButton;
     private boolean mIsFlashing = true;
     private int mScore = 0;
-    ArrayList<Integer> mCardFronts = new ArrayList<>();
+    private ArrayList<Integer> mCardFronts = new ArrayList<>();
     private boolean[] mIsCardLocked;
+    private ImageView[] mCardImageViews;
+
+
+    private GridView mGridView;
+    private Button mX;
+    private Button mY;
+    private Button vSpace;
+    private Button hSpace;
+    private Button mStrech;
+    private Button mColCount;
+    private Button mColSize;
+
+    private void testButtonWirings() {
+        mX = findViewById(R.id.xxx);
+        mY = findViewById(R.id.yyy);
+        vSpace = findViewById(R.id.vspace);
+        hSpace = findViewById(R.id.hspace);
+        mStrech = findViewById(R.id.stretchmode);
+        mColCount = findViewById(R.id.colcount);
+        mColSize = findViewById(R.id.colsize);
+
+        mX.setOnClickListener(new View.OnClickListener() {
+            int horiSize = 0;
+            double vertSize = 0;
+            @Override
+            public void onClick(View v) {
+                for (int index = 0; index < mCardAmount; index++) {
+
+                    int height = mCardImageViews[index].getLayoutParams().height;
+                    vertSize = horiSize * 3 / 4;
+                    mCardImageViews[index].setLayoutParams(new GridView.LayoutParams(horiSize,
+                            (int)vertSize));
+
+                }
+                mGridView.setColumnWidth(horiSize);
+
+                horiSize = (horiSize + 40) % 800;
+            }
+        });
+        mY.setOnClickListener(new View.OnClickListener() {
+            int vertSize = 0;
+            @Override
+            public void onClick(View v) {
+                for (int index = 0; index < mCardAmount; index++) {
+                    int width = mCardImageViews[index].getLayoutParams().width;
+                    mCardImageViews[index].setLayoutParams(new GridView.LayoutParams(width, vertSize));
+                }
+                vertSize = (vertSize + 100) % 800;
+            }
+        });
+
+        vSpace.setOnClickListener(new View.OnClickListener() {
+            int spacev= 0;
+            @Override
+            public void onClick(View v) {
+                mGridView.setVerticalSpacing(spacev);
+                spacev = (spacev + 20) % 100;
+            }
+        });
+
+        hSpace.setOnClickListener(new View.OnClickListener() {
+            int spacex= 0;
+            @Override
+            public void onClick(View v) {
+                mGridView.setHorizontalSpacing(spacex);
+                spacex = (spacex + 20) % 100;
+            }
+        });
+
+        mStrech.setOnClickListener(new View.OnClickListener() {
+            int strech = 0;
+            @Override
+            public void onClick(View v) {
+                mGridView.setStretchMode(strech);
+                strech = (strech + 1) % 4;
+            }
+        });
+
+        mColCount.setOnClickListener(new View.OnClickListener() {
+            int colc = 1;
+            @Override
+            public void onClick(View v) {
+                mGridView.setNumColumns((int) Math.ceil(Math.sqrt(mCardAmount)));
+//                colc = ((colc)  % 7) + 1;
+            }
+        });
+
+        mColSize.setOnClickListener(new View.OnClickListener() {
+            int colsi = 50;
+            @Override
+            public void onClick(View v) {
+                mGridView.setColumnWidth(colsi);
+                colsi = (colsi) % 500 + 100;
+            }
+        });
+
+    }
 
 
     private static Integer[] mThumbIds = {
@@ -45,6 +142,7 @@ public class GameActivity extends FragmentActivity {
 
 
         wireWidgets();
+        testButtonWirings();
         promptCardCountDialog();
         Log.i("mCardAmount", mCardAmount + "");
 
@@ -101,7 +199,7 @@ public class GameActivity extends FragmentActivity {
         anim.setRepeatCount(android.view.animation.Animation.INFINITE);
         mTryAgainButton.startAnimation(anim);
     }
-
+int xsize;
     private void setupCards() {
         // setup pool of possible words
         ArrayList<Integer> possWordIndexes = new ArrayList<>();
@@ -119,23 +217,48 @@ public class GameActivity extends FragmentActivity {
 
         // shuffle the words to be in different positions on the grid
         Collections.shuffle(mCardFronts);
+
+        // show the words in the image views at their respective positions
+        mCardImageViews = new ImageView[mCardAmount];
+        Configuration config = getResources().getConfiguration();
+        int width = config.smallestScreenWidthDp;
+//        if (mCardAmount > 4)
+            xsize = (int)(width / Math.ceil(Math.sqrt(mCardAmount)-1));
+//        else
+//            xsize = (int)(width / Math.sqrt(mCardAmount)) - 300;
+        int ysize = (xsize * 4) / 3;
+        for (int index = 0; index < mCardAmount; index++) {
+            mCardImageViews[index] = new ImageView(GameActivity.this);
+           // mCardImageViews[index].setLayoutParams(new GridView.LayoutParams(250, 350));
+            mCardImageViews[index].setLayoutParams(new GridView.LayoutParams(xsize,
+                    ysize));
+
+            mCardImageViews[index].setImageResource(R.drawable.a_back);
+//            mCardImageViews[index].setImageResource(mCardFronts.get(index));
+        }
     }
 
     private void displayCardGrid() {
-        ImageAdapter imageAdapter = new ImageAdapter(this, mCardFronts);
-        GridView gridView = (GridView) findViewById(R.id.gridView);
-        if (mCardAmount >= 12)
-            gridView.setNumColumns(5);
-        else if (mCardAmount >= 6)
-            gridView.setNumColumns(4);
+        ImageAdapter imageAdapter = new ImageAdapter(this, mCardImageViews);
+//        GridView gridView = (GridView) findViewById(R.id.gridView);
+        mGridView = (GridView) findViewById(R.id.gridView);
+//        if (mCardAmount >= 12)
+//            gridView.setNumColumns(5);
+//        else if (mCardAmount >= 6)
+//            gridView.setNumColumns(4);
 
-        gridView.setAdapter(imageAdapter);
-        gridView.setStretchMode(GridView.NO_STRETCH);
+//        gridView.setAdapter(imageAdapter);
 
+
+        mGridView.setGravity(11);
+        mGridView.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);
+        mGridView.setAdapter(imageAdapter);
+        mGridView.setColumnWidth(xsize);
+
+        mGridView.setNumColumns((int) Math.sqrt(mCardAmount));
 
         Log.i("params", "" );
     }
-
 
     private void endButtonFlash() {
         mTryAgainButton.clearAnimation();
