@@ -124,7 +124,7 @@ public class Game {
         //editor.apply();
         editor.putInt("Score", score);
         editor.apply();*/
-        HighScoresActivity.updateScores(username, score, prefs);
+        HighScoresActivity.updateScores(username, score, prefs, mNumberOfCards);
         getGameActivity().finish();
     }
 
