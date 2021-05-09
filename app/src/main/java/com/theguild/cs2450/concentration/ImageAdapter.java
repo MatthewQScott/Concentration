@@ -13,11 +13,9 @@ import java.util.ArrayList;
 
 public class ImageAdapter extends BaseAdapter {
 
-    private GameActivity mGameActivity;
     private ArrayList<ImageView> mCardImageViews;
 
-    public ImageAdapter(Context c, ArrayList<ImageView> cardImageViews) {
-        mGameActivity = (GameActivity) c;
+    public ImageAdapter(ArrayList<ImageView> cardImageViews) {
         mCardImageViews = cardImageViews;
     }
 

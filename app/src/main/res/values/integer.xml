@@ -5,4 +5,6 @@
     <integer name="high_score_1">9999</integer>
     <integer name="high_score_2">9999</integer>
     <integer name="high_score_3">9999</integer>
+
+
 </resources>

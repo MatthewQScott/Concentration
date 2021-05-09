@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="grid_view_size">400dp</dimen>
+    <dimen name="button_text_size">25dp</dimen>
+
+</resources>

@@ -6,19 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
-    AudioPlayer audio;
     private Button mPlayButton;
     private Button mHighScoresButton;
     private Button mMusicButton;
-
-
-    Animation mAnimation;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +48,14 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (!AudioTasks.musicPaused) {
+                if (!AudioTasks.sMusicPaused) {
                     stopService(musicIntent);
-                    AudioTasks.musicPaused = true;
+                    AudioTasks.sMusicPaused = true;
                     mMusicButton.setText("Enable Music");
                 }
                 else {
                     startService(musicIntent);
-                    AudioTasks.musicPaused = false;
+                    AudioTasks.sMusicPaused = false;
                     mMusicButton.setText("Disable Music");
                 }
             }

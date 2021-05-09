@@ -38,21 +38,26 @@ public class HighScoresActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         numCards = Integer.parseInt(possCardAmounts[which].toString());
                         SharedPreferences prefs = getSharedPreferences("PREFS", 0);
-                        prevScore = prefs.getInt("Score" + Integer.toString(numCards), 0);
-                        prevName = prefs.getString("Name" + Integer.toString(numCards), "");
-                        highScore1 = prefs.getInt("HighScore1" + Integer.toString(numCards), 0);
-                        highScore2 = prefs.getInt("HighScore2" + Integer.toString(numCards), 0);
-                        highScore3 = prefs.getInt("HighScore3" + Integer.toString(numCards), 0);
-                        name1 = prefs.getString("Name1" + Integer.toString(numCards), "ABC");
-                        name2 = prefs.getString("Name2" + Integer.toString(numCards), "DEF");
-                        name3 = prefs.getString("Name3" + Integer.toString(numCards), "GHI");
+                        prevScore = prefs.getInt("Score-" + numCards, 0);
+                        prevName = prefs.getString("Name-" + numCards, "");
+                        highScore1 = prefs.getInt("HighScore1-" + numCards, 0);
+                        highScore2 = prefs.getInt("HighScore2-" + numCards, 0);
+                        highScore3 = prefs.getInt("HighScore3-" + numCards, 0);
+                        name1 = prefs.getString("Name1-" + numCards, "ABC");
+                        name2 = prefs.getString("Name2-" + numCards, "DEF");
+                        name3 = prefs.getString("Name3-" + numCards, "GHI");
 
-                        textViewScore.setText("High Scores for " + Integer.toString(numCards) + "-card games:" + "\nPrevious Score: " + prevScore + "\n1. " + name1 + " " + highScore1 + "\n2. " + name2 + " " + highScore2 + "\n3. " + name3 + " " + highScore3);
+                        textViewScore.setText("High Scores for " + Integer.toString(numCards) +
+                                "-card games:" +
+                                "\nPrevious Score: " + prevScore +
+                                "\n1. " + name1 + " " + highScore1 +
+                                "\n2. " + name2 + " " + highScore2 +
+                                "\n3. " + name3 + " " + highScore3);
+                        System.out.println(numCards);
                     }
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
-        System.out.println(numCards);
 
         setContentView(R.layout.activity_high_scores);
         textViewScore = (TextView) findViewById(R.id.textViewScore);
@@ -63,8 +68,8 @@ public class HighScoresActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //comment out next two lines to disable automatic reset of scores, I just did this for testing
-                //final SharedPreferences pref = getSharedPreferences("PREFS", android.content.Context.MODE_PRIVATE);
-                //pref.edit().clear().commit();
+//                final SharedPreferences pref = getSharedPreferences("PREFS", android.content.Context.MODE_PRIVATE);
+//                pref.edit().clear().commit();
                 finish();
             }
         });
@@ -73,14 +78,23 @@ public class HighScoresActivity extends AppCompatActivity {
     // updates high scores
     public static void updateScores(String name, int score, SharedPreferences prefs, int noOfCards) {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("Name" + Integer.toString(noOfCards), name);
-        editor.putInt("Score" + Integer.toString(noOfCards), score);
+        editor.putString("Name-" + Integer.toString(noOfCards), name);
+        editor.putInt("Score-" + Integer.toString(noOfCards), score);
+
+        prevScore = prefs.getInt("Score-" + numCards, 0);
+        prevName = prefs.getString("Name-" + numCards, "");
+        highScore1 = prefs.getInt("HighScore1-" + numCards, 0);
+        highScore2 = prefs.getInt("HighScore2-" + numCards, 0);
+        highScore3 = prefs.getInt("HighScore3-" + numCards, 0);
+        name1 = prefs.getString("Name1-" + numCards, "ABC");
+        name2 = prefs.getString("Name2-" + numCards, "DEF");
+        name3 = prefs.getString("Name3-" + numCards, "GHI");
 
         if (score > highScore3) {
             highScore3 = score;
             name3 = name;
-            editor.putString("Name3" + Integer.toString(noOfCards), name3);
-            editor.putInt("HighScore3" + Integer.toString(noOfCards), highScore3);
+            editor.putString("Name3-" + Integer.toString(noOfCards), name3);
+            editor.putInt("HighScore3-" + Integer.toString(noOfCards), highScore3);
             editor.apply();
         }
 
@@ -91,10 +105,10 @@ public class HighScoresActivity extends AppCompatActivity {
             name2 = name;
             highScore3 = temp;
             name3 = tempName;
-            editor.putString("Name3" + Integer.toString(noOfCards), name3);
-            editor.putString("Name2" + Integer.toString(noOfCards), name2);
-            editor.putInt("HighScore3" + Integer.toString(noOfCards), highScore3);
-            editor.putInt("HighScore2" + Integer.toString(noOfCards), highScore2);
+            editor.putString("Name3-" + Integer.toString(noOfCards), name3);
+            editor.putString("Name2-" + Integer.toString(noOfCards), name2);
+            editor.putInt("HighScore3-" + Integer.toString(noOfCards), highScore3);
+            editor.putInt("HighScore2-" + Integer.toString(noOfCards), highScore2);
             editor.apply();
         }
 
@@ -105,10 +119,10 @@ public class HighScoresActivity extends AppCompatActivity {
             name1 = name;
             highScore2 = temp;
             name2 = tempName;
-            editor.putString("Name2" + Integer.toString(noOfCards), name2);
-            editor.putString("Name1" + Integer.toString(noOfCards), name1);
-            editor.putInt("HighScore2" + Integer.toString(noOfCards), highScore2);
-            editor.putInt("HighScore1" + Integer.toString(noOfCards), highScore1);
+            editor.putString("Name2-" + Integer.toString(noOfCards), name2);
+            editor.putString("Name1-" + Integer.toString(noOfCards), name1);
+            editor.putInt("HighScore2-" + Integer.toString(noOfCards), highScore2);
+            editor.putInt("HighScore1-" + Integer.toString(noOfCards), highScore1);
             editor.apply();
         }
     }

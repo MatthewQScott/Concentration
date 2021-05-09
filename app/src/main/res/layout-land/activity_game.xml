@@ -18,15 +18,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:layout_weight="6"
             android:orientation="horizontal">
+
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="5" />
 
             <Button
                 android:id="@+id/end_game_button"
@@ -35,15 +37,12 @@
                 android:background="@color/cardview_dark_background"
                 android:fontFamily="casual"
                 android:layout_weight="1"
+                android:layout_margin="10dp"
                 android:text="End Game"
                 android:textSize="@dimen/button_text_size"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/cardview_dark_background" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2" />
 
             <Button
                 android:id="@+id/new_game_button"
@@ -52,63 +51,62 @@
                 android:layout_weight="1"
                 android:background="@color/cardview_dark_background"
                 android:fontFamily="casual"
+                android:layout_margin="10dp"
                 android:textSize="@dimen/button_text_size"
                 android:text="New Game"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/cardview_dark_background" />
 
+
+            <Button
+                android:id="@+id/try_again_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_dark_background"
+                android:fontFamily="casual"
+                android:layout_margin="10dp"
+                android:text="Try Again"
+                android:layout_weight="2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_text_size"
+                app:backgroundTint="@color/cardview_dark_background" />
+
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="5" />
+
+            <TextView
+                android:id="@+id/score_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="casual"
+                android:layout_margin="10dp"
+                android:text="Your Score: 0"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_text_size" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/score_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="casual"
-            android:text="Your Score: 0"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/title_text_size" />
 
         <GridView
             android:id="@+id/gridView"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/grid_view_size"
-            android:layout_marginTop="4dp"
-            android:layout_weight="50"
             android:horizontalSpacing="4dp"
+            android:layout_weight="1"
             android:numColumns="auto_fit"
             android:stretchMode="spacingWidth"
             android:verticalSpacing="4dp">
 
         </GridView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="9"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/try_again_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:background="@color/cardview_dark_background"
-                android:fontFamily="casual"
-                android:text="Try Again"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size"
-                app:backgroundTint="@color/cardview_dark_background" />
-
-        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

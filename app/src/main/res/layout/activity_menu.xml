@@ -16,22 +16,23 @@
         tools:layout_editor_absoluteY="393dp">
 
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="casual"
+            android:text="CONCENTRATION"
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_text_size" />
+
         <LinearLayout
-            android:layout_width="240dp"
+            android:layout_width="@dimen/button_layout_size"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:translationY="-20dp">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="casual"
-                android:text="CONCENTRATION"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/play_button"
@@ -39,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:text="PLAY"
+                android:textSize="@dimen/button_text_size"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/cardview_dark_background" />
 
@@ -47,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
+                android:textSize="@dimen/button_text_size"
                 android:text="HIGH SCORES"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/cardview_dark_background" />
@@ -56,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
+                android:textSize="@dimen/button_text_size"
                 android:text="DISABLE MUSIC"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/cardview_dark_background" />
