@@ -2,7 +2,6 @@ package com.theguild.cs2450.concentration;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
@@ -13,23 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 public class HighScoresActivity extends AppCompatActivity {
 
     private Button hsBackButton;
-    static int highScore1;
-    static int highScore2;
-    static int highScore3;
-    static int numCards;
-    static String prevName;
-    static String name1;
-    static String name2;
-    static String name3;
-    TextView textViewScore;
-
-    @Override
-    public void onBackPressed()
-    {
-        Intent i = new Intent(getApplicationContext(), Game.class);
-        startActivity(i);
-        finish();
-    }
+    private static int sHighScore1;
+    private static int sHighScore2;
+    private static int sHighScore3;
+    private static int sNumCards;
+    private static String sName1;
+    private static String sName2;
+    private static String sName3;
+    private TextView mTextViewScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,33 +33,33 @@ public class HighScoresActivity extends AppCompatActivity {
                 .setItems(possCardAmounts, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        numCards = Integer.parseInt(possCardAmounts[which].toString());
+                        sNumCards = Integer.parseInt(possCardAmounts[which].toString());
                         SharedPreferences prefs = getSharedPreferences("PREFS", 0);
-                        highScore1 = prefs.getInt("HighScore1-" + Integer.toString(numCards), 0);
-                        highScore2 = prefs.getInt("HighScore2-" + Integer.toString(numCards), 0);
-                        highScore3 = prefs.getInt("HighScore3-" + Integer.toString(numCards), 0);
-                        name1 = prefs.getString("Name1-" + Integer.toString(numCards), "YOURNAMEHERE");
-                        name2 = prefs.getString("Name2-" + Integer.toString(numCards), "YOURNAMEHERE");
-                        name3 = prefs.getString("Name3-" + Integer.toString(numCards), "YOURNAMEHERE");
+                        sHighScore1 = prefs.getInt("HighScore1-" + Integer.toString(sNumCards), 0);
+                        sHighScore2 = prefs.getInt("HighScore2-" + Integer.toString(sNumCards), 0);
+                        sHighScore3 = prefs.getInt("HighScore3-" + Integer.toString(sNumCards), 0);
+                        sName1 = prefs.getString("Name1-" + Integer.toString(sNumCards), "YOURNAMEHERE");
+                        sName2 = prefs.getString("Name2-" + Integer.toString(sNumCards), "YOURNAMEHERE");
+                        sName3 = prefs.getString("Name3-" + Integer.toString(sNumCards), "YOURNAMEHERE");
 
-                        textViewScore.setText("High Scores for " + Integer.toString(numCards) + "-card games:" + "\n1. " + name1 + " " + highScore1 + "\n2. " + name2 + " " + highScore2 + "\n3. " + name3 + " " + highScore3);
+                        mTextViewScore.setText("High Scores for " + Integer.toString(sNumCards) + "-card games:" + "\n1. " + sName1 + " " + sHighScore1 + "\n2. " + sName2 + " " + sHighScore2 + "\n3. " + sName3 + " " + sHighScore3);
                     }
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
-        System.out.println(numCards);
+        System.out.println(sNumCards);
 
         setContentView(R.layout.activity_high_scores);
-        textViewScore = (TextView) findViewById(R.id.textViewScore);
-        textViewScore.setTextSize(36);
+        mTextViewScore = (TextView) findViewById(R.id.textViewScore);
+        mTextViewScore.setTextSize(36);
 
         hsBackButton = (Button) findViewById(R.id.hs_back_button);
         hsBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //comment out next two lines to disable automatic reset of scores, I just did this for testing
-                //final SharedPreferences pref = getSharedPreferences("PREFS", android.content.Context.MODE_PRIVATE);
-                //pref.edit().clear().commit();
+//                final SharedPreferences pref = getSharedPreferences("PREFS", android.content.Context.MODE_PRIVATE);
+//                pref.edit().clear().commit();
                 finish();
             }
         });
@@ -79,13 +69,13 @@ public class HighScoresActivity extends AppCompatActivity {
     public static void updateScores(String name, int score, SharedPreferences prefs, int noOfCards) {
         SharedPreferences.Editor editor = prefs.edit();
 
-        if (score > highScore3) {
-            editor.putString("Name3-" + Integer.toString(noOfCards), name3);
-            editor.putInt("HighScore3-" + Integer.toString(noOfCards), highScore3);
+        if (score > sHighScore3) {
+            editor.putString("Name3-" + Integer.toString(noOfCards), sName3);
+            editor.putInt("HighScore3-" + Integer.toString(noOfCards), sHighScore3);
             editor.apply();
         }
 
-        if (score > highScore2) {
+        if (score > sHighScore2) {
             int temp = prefs.getInt("HighScore2-" + Integer.toString(noOfCards), 0);
             String tempName = prefs.getString("Name2-" + Integer.toString(noOfCards), "YOURNAMEHERE");
             editor.putString("Name3-" + Integer.toString(noOfCards), tempName);
@@ -95,7 +85,7 @@ public class HighScoresActivity extends AppCompatActivity {
             editor.apply();
         }
 
-        if (score > highScore1) {
+        if (score > sHighScore1) {
             int temp = prefs.getInt("HighScore1-" + Integer.toString(noOfCards), 0);
             String tempName = prefs.getString("Name1-" + Integer.toString(noOfCards), "YOURNAMEHERE");
             editor.putString("Name2-" + Integer.toString(noOfCards), tempName);
