@@ -13,6 +13,7 @@
         <activity
             android:name=".GameActivity"
             android:label="@string/title_activity_game"
+            android:parentActivityName=".MenuActivity"
             android:theme="@style/Theme.Concentration.NoActionBar" />
         <activity android:name=".MenuActivity">
             <intent-filter>
@@ -21,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HighScoresActivity" />
+        <activity
+            android:name=".HighScoresActivity"
+            android:parentActivityName=".MenuActivity"/>
     </application>
 
 </manifest>

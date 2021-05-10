@@ -2,6 +2,8 @@ package com.theguild.cs2450.concentration;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
@@ -19,6 +21,7 @@ public class GameActivity extends FragmentActivity {
     private Game mGame;
     private TextView mScoreTextView;
     private int mNumberOfCards = 8;
+    private int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,16 @@ public class GameActivity extends FragmentActivity {
          mBackButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   finish();
+                    SharedPreferences preferences = getSharedPreferences("PREFS", 0);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("score", score);
+                    editor.apply();
+
+                    Intent i = new Intent(getApplicationContext(), HighScoresActivity.class);
+                    startActivity(i);
+                    finish();
                 }
+
          });
 
         mTryAgainButton = (Button) findViewById(R.id.try_again_button);
