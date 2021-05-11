@@ -44,13 +44,13 @@ public class AudioService extends android.app.IntentService {
     public static void playMusic(android.content.Context c) {
         if (sMediaPlayer == null) {
             sMediaPlayer = new android.media.MediaPlayer();
-            sMediaPlayer.setLooping(true);
         }
 
         if (!sMusicPaused) {
             sMediaPlayer = android.media.MediaPlayer.create(c, R.raw.music);
             sMediaPlayer.seekTo(sSavedPosition);
             sMediaPlayer.start();
+            sMediaPlayer.setLooping(true);
         }
         else {
             //do nothing (stops disabled music from resuming when device is rotated)
