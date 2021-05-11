@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 public class HighScoresActivity extends AppCompatActivity {
 
@@ -35,12 +36,7 @@ public class HighScoresActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         sNumCards = Integer.parseInt(possCardAmounts[which].toString());
                         SharedPreferences prefs = getSharedPreferences("PREFS", 0);
-                        sHighScore1 = prefs.getInt("HighScore1-" + Integer.toString(sNumCards), 0);
-                        sHighScore2 = prefs.getInt("HighScore2-" + Integer.toString(sNumCards), 0);
-                        sHighScore3 = prefs.getInt("HighScore3-" + Integer.toString(sNumCards), 0);
-                        sName1 = prefs.getString("Name1-" + Integer.toString(sNumCards), "YOURNAMEHERE");
-                        sName2 = prefs.getString("Name2-" + Integer.toString(sNumCards), "YOURNAMEHERE");
-                        sName3 = prefs.getString("Name3-" + Integer.toString(sNumCards), "YOURNAMEHERE");
+                        getHighScorePlaces(prefs, sNumCards);
 
                         mTextViewScore.setText("High Scores for " + Integer.toString(sNumCards) + "-card games:" + "\n1. " + sName1 + " " + sHighScore1 + "\n2. " + sName2 + " " + sHighScore2 + "\n3. " + sName3 + " " + sHighScore3);
                     }
@@ -69,21 +65,7 @@ public class HighScoresActivity extends AppCompatActivity {
     public static void updateScores(String name, int score, SharedPreferences prefs, int noOfCards) {
         SharedPreferences.Editor editor = prefs.edit();
 
-        if (score > sHighScore3) {
-            editor.putString("Name3-" + Integer.toString(noOfCards), sName3);
-            editor.putInt("HighScore3-" + Integer.toString(noOfCards), sHighScore3);
-            editor.apply();
-        }
-
-        if (score > sHighScore2) {
-            int temp = prefs.getInt("HighScore2-" + Integer.toString(noOfCards), 0);
-            String tempName = prefs.getString("Name2-" + Integer.toString(noOfCards), "YOURNAMEHERE");
-            editor.putString("Name3-" + Integer.toString(noOfCards), tempName);
-            editor.putString("Name2-" + Integer.toString(noOfCards), name);
-            editor.putInt("HighScore3-" + Integer.toString(noOfCards), temp);
-            editor.putInt("HighScore2-" + Integer.toString(noOfCards), score);
-            editor.apply();
-        }
+        getHighScorePlaces(prefs, noOfCards);
 
         if (score > sHighScore1) {
             int temp = prefs.getInt("HighScore1-" + Integer.toString(noOfCards), 0);
@@ -94,7 +76,29 @@ public class HighScoresActivity extends AppCompatActivity {
             editor.putInt("HighScore1-" + Integer.toString(noOfCards), score);
             editor.apply();
         }
+        else if (score > sHighScore2) {
+            int temp = prefs.getInt("HighScore2-" + Integer.toString(noOfCards), 0);
+            String tempName = prefs.getString("Name2-" + Integer.toString(noOfCards), "YOURNAMEHERE");
+            editor.putString("Name3-" + Integer.toString(noOfCards), tempName);
+            editor.putString("Name2-" + Integer.toString(noOfCards), name);
+            editor.putInt("HighScore3-" + Integer.toString(noOfCards), temp);
+            editor.putInt("HighScore2-" + Integer.toString(noOfCards), score);
+            editor.apply();
+        }
+        else if (score > sHighScore3) {
+            editor.putString("Name3-" + Integer.toString(noOfCards), name);
+            editor.putInt("HighScore3-" + Integer.toString(noOfCards), score);
+            editor.apply();
+        }
+
     }
 
-
+    private static void getHighScorePlaces(SharedPreferences prefs, int numOfCards) {
+        sHighScore1 = prefs.getInt("HighScore1-" + numOfCards, 0);
+        sHighScore2 = prefs.getInt("HighScore2-" + numOfCards, 0);
+        sHighScore3 = prefs.getInt("HighScore3-" + numOfCards, 0);
+        sName1 = prefs.getString("Name1-" + numOfCards, "YOURNAMEHERE");
+        sName2 = prefs.getString("Name2-" + numOfCards, "YOURNAMEHERE");
+        sName3 = prefs.getString("Name3-" + numOfCards, "YOURNAMEHERE");
+    }
 }

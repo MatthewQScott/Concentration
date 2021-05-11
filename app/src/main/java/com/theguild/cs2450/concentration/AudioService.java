@@ -1,9 +1,45 @@
 package com.theguild.cs2450.concentration;
 
-public class AudioTasks {
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+
+import androidx.annotation.Nullable;
+
+public class AudioService extends android.app.IntentService {
     private static int sSavedPosition = 0;
     public static boolean sMusicPaused = false;
     private static android.media.MediaPlayer sMediaPlayer;
+
+    public AudioService() {
+        super("AudioService");
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return Service.START_STICKY;
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+        String action = intent.getAction();
+    }
+
+    @Override
+    public void onCreate() {
+        playMusic(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        stopMusic();
+    }
 
     public static void playMusic(android.content.Context c) {
         if (sMediaPlayer == null) {

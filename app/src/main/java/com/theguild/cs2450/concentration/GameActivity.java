@@ -17,12 +17,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GameActivity extends FragmentActivity {
+public class GameActivity extends AppCompatActivity {
 
     private static final String TAG = "GameActivity";
     private static final String KEY_CARDAMOUNT = "cardAmount";

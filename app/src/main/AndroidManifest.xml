@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Concentration">
-        <service android:name = ".AudioPlayer"/>
+        <service android:name = ".AudioService"/>
         <activity
             android:name=".GameActivity"
             android:label="@string/title_activity_game"

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
@@ -19,7 +18,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Intent musicIntent = new Intent(this, AudioPlayer.class);
+        Intent musicIntent = new Intent(this, AudioService.class);
         musicIntent.setAction(null);
         startService(musicIntent);
 
@@ -48,14 +47,14 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (!AudioTasks.sMusicPaused) {
+                if (!AudioService.sMusicPaused) {
                     stopService(musicIntent);
-                    AudioTasks.sMusicPaused = true;
+                    AudioService.sMusicPaused = true;
                     mMusicButton.setText("Enable Music");
                 }
                 else {
                     startService(musicIntent);
-                    AudioTasks.sMusicPaused = false;
+                    AudioService.sMusicPaused = false;
                     mMusicButton.setText("Disable Music");
                 }
             }
