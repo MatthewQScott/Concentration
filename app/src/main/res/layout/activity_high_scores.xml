@@ -11,7 +11,7 @@
     tools:context=".HighScoresActivity">
 
     <TextView
-        android:id="@+id/textViewScore"
+        android:id="@+id/scores_list_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="casual"

@@ -8,10 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 public class HighScoresActivity extends AppCompatActivity {
 
+    // Class member field variables
     private Button hsBackButton;
     private static int sHighScore1;
     private static int sHighScore2;
@@ -36,11 +36,20 @@ public class HighScoresActivity extends AppCompatActivity {
         AudioService.playMusic(this);
     }*/
 
+    // prompts the user with the card number dialog box and also wires the screens widgets
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_high_scores);
 
+        showCardNumDialog();
+        wireWidgets();
+    }
+
+    // shows a dialog prompting the user to choose the card number from a list that they would
+    // like to see the appropriate high score set for.
+    private void showCardNumDialog() {
         CharSequence[] possCardAmounts = { "4", "6", "8", "10", "12", "14", "16", "18", "20" };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.choose_card_number)
@@ -57,10 +66,12 @@ public class HighScoresActivity extends AppCompatActivity {
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
-        System.out.println(sNumCards);
+    }
 
-        setContentView(R.layout.activity_high_scores);
-        mTextViewScore = (TextView) findViewById(R.id.textViewScore);
+    // wires the text view that will be displaying the scores to a text view variable
+    // and wires a back button that finishes the activity, going back to the main menu
+    private void wireWidgets() {
+        mTextViewScore = (TextView) findViewById(R.id.scores_list_text_view);
         mTextViewScore.setTextSize(36);
 
         hsBackButton = (Button) findViewById(R.id.hs_back_button);
@@ -81,6 +92,7 @@ public class HighScoresActivity extends AppCompatActivity {
 
         getHighScorePlaces(prefs, noOfCards);
 
+        // places the new high score where it belongs on the list in the file according to its rank
         if (score > sHighScore1) {
             int temp = prefs.getInt("HighScore1-" + Integer.toString(noOfCards), 0);
             String tempName = prefs.getString("Name1-" + Integer.toString(noOfCards), "YOURNAMEHERE");
@@ -107,6 +119,7 @@ public class HighScoresActivity extends AppCompatActivity {
 
     }
 
+    // retrieves the usernames and their high scores at the 1st 2nd and 3rds place
     private static void getHighScorePlaces(SharedPreferences prefs, int numOfCards) {
         sHighScore1 = prefs.getInt("HighScore1-" + numOfCards, 0);
         sHighScore2 = prefs.getInt("HighScore2-" + numOfCards, 0);

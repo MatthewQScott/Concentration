@@ -9,6 +9,8 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
+
+
     private Button mPlayButton;
     private Button mHighScoresButton;
     private Button mMusicButton;
@@ -58,10 +60,10 @@ public class MenuActivity extends AppCompatActivity {
 
         if (AudioService.sMusicPaused) {
             mMusicButton.setText("Enable Music");
+
         }
 
         mMusicButton.setOnClickListener(new View.OnClickListener() {
-            public boolean musicEnabled = true;
 
             @Override
             public void onClick(View v) {
