@@ -1,3 +1,5 @@
+//Authors: Matthew Scott Bronco #014966432, Kaye Reeves Bronco #014865383
+
 package com.theguild.cs2450.concentration;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,26 +10,9 @@ import android.view.View;
 import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
-
-
-
     private Button mPlayButton;
     private Button mHighScoresButton;
     private Button mMusicButton;
-
-    //enables music to stop playing when app is out of focus
-    /*@Override
-    protected void onPause() {
-        super.onPause();
-        AudioService.stopMusic();
-    }
-
-    //enables music to continue playing when app re-enters focus
-    @Override
-    protected void onResume() {
-        super.onResume();
-        AudioService.playMusic(this);
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

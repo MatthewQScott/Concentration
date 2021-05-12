@@ -1,3 +1,5 @@
+//Author: Kaye Reeves Bronco #014865383
+
 package com.theguild.cs2450.concentration;
 
 import android.app.Service;

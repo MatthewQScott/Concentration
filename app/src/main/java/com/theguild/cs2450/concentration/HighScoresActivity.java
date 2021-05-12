@@ -1,3 +1,5 @@
+//Authors: Gina Martinez Bronco #12111216, Kaye Reeves Bronco #014865383
+
 package com.theguild.cs2450.concentration;
 
 import android.app.AlertDialog;
@@ -21,20 +23,6 @@ public class HighScoresActivity extends AppCompatActivity {
     private static String sName2;
     private static String sName3;
     private TextView mTextViewScore;
-
-    //enables music to stop playing when app is out of focus
-    /*@Override
-    protected void onPause() {
-        super.onPause();
-        AudioService.stopMusic();
-    }
-
-    //enables music to continue playing when app re-enters focus
-    @Override
-    protected void onResume() {
-        super.onResume();
-        AudioService.playMusic(this);
-    }*/
 
     // prompts the user with the card number dialog box and also wires the screens widgets
     @Override

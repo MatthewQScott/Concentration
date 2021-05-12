@@ -1,3 +1,5 @@
+//Author: Matthew Scott Bronco #014966432
+
 package com.theguild.cs2450.concentration;
 
 import android.content.Context;
