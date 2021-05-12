@@ -14,7 +14,7 @@ public class MenuActivity extends AppCompatActivity {
     private Button mMusicButton;
 
     //enables music to stop playing when app is out of focus
-    @Override
+    /*@Override
     protected void onPause() {
         super.onPause();
         AudioService.stopMusic();
@@ -25,7 +25,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         AudioService.playMusic(this);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,10 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         mMusicButton = (Button) findViewById(R.id.music_button);
+
+        if (AudioService.sMusicPaused) {
+            mMusicButton.setText("Enable Music");
+        }
 
         mMusicButton.setOnClickListener(new View.OnClickListener() {
             public boolean musicEnabled = true;

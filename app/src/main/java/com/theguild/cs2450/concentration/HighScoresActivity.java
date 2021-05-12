@@ -23,7 +23,7 @@ public class HighScoresActivity extends AppCompatActivity {
     private TextView mTextViewScore;
 
     //enables music to stop playing when app is out of focus
-    @Override
+    /*@Override
     protected void onPause() {
         super.onPause();
         AudioService.stopMusic();
@@ -34,7 +34,7 @@ public class HighScoresActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         AudioService.playMusic(this);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
