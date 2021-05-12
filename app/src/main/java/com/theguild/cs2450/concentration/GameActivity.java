@@ -65,6 +65,20 @@ public class GameActivity extends AppCompatActivity {
             R.drawable.a_9, R.drawable.a_10,
     };
 
+    //enables music to stop playing when app is out of focus
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AudioService.stopMusic();
+    }
+
+    //enables music to continue playing when app re-enters focus
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AudioService.playMusic(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
