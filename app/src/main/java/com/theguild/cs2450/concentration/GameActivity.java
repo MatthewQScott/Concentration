@@ -314,6 +314,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /** compareSelectedCards()
+     * Determines whether two selected cards are a match and updates score accordingly.
+     */
     private void compareSelectedCards() {
         if (mCardFronts.get(mSelectedIndex1) == mCardFronts.get(mSelectedIndex2)) {
             mScore += 2;
@@ -332,6 +335,9 @@ public class GameActivity extends AppCompatActivity {
         mScoreTextView.setText("Your Score: " + mScore);
     }
 
+    /** tryAgain()
+     * Allows the user to try again after picking two mismatched cards.
+     */
     public void tryAgain() {
         if (mSelectedIndex1 != -1 && mSelectedIndex2 != -1) {
             animateFlippingCard(mSelectedIndex1);
@@ -346,6 +352,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /** startButtonFlash()
+     * Starts the flashing animation of the Try Again button.
+     */
     private void startButtonFlash() {
         android.view.animation.Animation anim = new android.view.animation.AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(450);
@@ -355,10 +364,17 @@ public class GameActivity extends AppCompatActivity {
         mTryAgainButton.startAnimation(anim);
     }
 
+    /** endButtonFlash()
+     * Stops the flashing animation of the Try Again button.
+     */
     private void endButtonFlash() {
         mTryAgainButton.clearAnimation();
     }
 
+    /** isGameWon()
+     * Determines if the user has won the game.
+     * @return boolean Whether or not the game has been won.
+     */
     private boolean isGameWon() {
         boolean isGameWon = true;
         for(boolean isLocked: mIsCardLocked) {
@@ -369,6 +385,9 @@ public class GameActivity extends AppCompatActivity {
         return isGameWon;
     }
 
+    /** showUsernameDialog()
+     * Prompts the user for a name to enter into the high score table.
+     */
     private void showUsernameDialog() {
         mWhichDialogShowing = 2;
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
@@ -404,6 +423,10 @@ public class GameActivity extends AppCompatActivity {
         GameActivity.this.finish();
     }
 
+    /** onSaveInstanceState()
+     * Preserves the state of the activity when the state is changed.
+     * @param savedInstanceState The Bundle.
+     */
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
@@ -418,9 +441,6 @@ public class GameActivity extends AppCompatActivity {
         savedInstanceState.putBoolean(KEY_ISALLFLIPPINGDISABLED, mIsAllFlippingDisabled);
         savedInstanceState.putInt(KEY_WHICHDIALOGSHOWING, mWhichDialogShowing);
         savedInstanceState.putBoolean(KEY_ISFLASHING, mIsFlashing);
-
-
-
     }
 
 }
