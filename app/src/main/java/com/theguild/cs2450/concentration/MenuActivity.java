@@ -52,12 +52,12 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (!AudioService.sMusicPaused) {
+                if (!AudioService.sMusicPaused) { //disable music
                     stopService(musicIntent);
                     AudioService.sMusicPaused = true;
                     mMusicButton.setText("Enable Music");
                 }
-                else {
+                else { //enable music
                     startService(musicIntent);
                     AudioService.sMusicPaused = false;
                     mMusicButton.setText("Disable Music");

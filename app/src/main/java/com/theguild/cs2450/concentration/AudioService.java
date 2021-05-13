@@ -9,8 +9,8 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 public class AudioService extends android.app.IntentService {
-    private static int sSavedPosition = 0;
-    public static boolean sMusicPaused = false;
+    private static int sSavedPosition = 0; //stores the position in the music track
+    public static boolean sMusicPaused = false; //determines whether music is currently paused
     private static android.media.MediaPlayer sMediaPlayer;
 
     public AudioService() {
