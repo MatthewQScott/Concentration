@@ -21,7 +21,7 @@ public class AudioService extends android.app.IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         return Service.START_STICKY;
     }
-// wow@!
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -45,13 +45,13 @@ public class AudioService extends android.app.IntentService {
 
     public static void playMusic(android.content.Context c) {
         if (sMediaPlayer == null) {
-            sMediaPlayer = new android.media.MediaPlayer();
+            //sMediaPlayer = new android.media.MediaPlayer();
         }
 
         if (!sMusicPaused) {
             sMediaPlayer = android.media.MediaPlayer.create(c, R.raw.music);
-            sMediaPlayer.seekTo(sSavedPosition); //save position in track for resume
             sMediaPlayer.start();
+            sMediaPlayer.seekTo(sSavedPosition); //save position in track for resume
             sMediaPlayer.setLooping(true); //set music to loop
         }
         else {
@@ -61,8 +61,11 @@ public class AudioService extends android.app.IntentService {
 
     public static void stopMusic() {
         if (sMediaPlayer != null) {
-            sMediaPlayer.pause();
-            sSavedPosition = sMediaPlayer.getCurrentPosition(); //saves current place in music track
+            sSavedPosition = sMediaPlayer.getCurrentPosition();
+            sMediaPlayer.pause(); //saves current place in music track
+            if (sMediaPlayer.isPlaying())
+                sMediaPlayer.stop();
+            sMediaPlayer.reset();
             sMediaPlayer.release();
             sMediaPlayer = null;
         }

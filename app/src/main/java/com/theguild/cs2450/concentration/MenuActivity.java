@@ -13,15 +13,18 @@ public class MenuActivity extends AppCompatActivity {
     private Button mPlayButton;
     private Button mHighScoresButton;
     private Button mMusicButton;
+    private Intent musicIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Intent musicIntent = new Intent(this, AudioService.class);
+        musicIntent = new Intent(this, AudioService.class);
         musicIntent.setAction(null);
-        startService(musicIntent);
+        if (!AudioService.sMusicPaused) {
+            startService(musicIntent);
+        }
 
         mPlayButton = (Button) findViewById(R.id.play_button);
         mPlayButton.setOnClickListener(new View.OnClickListener() {
