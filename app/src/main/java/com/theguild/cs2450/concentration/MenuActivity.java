@@ -1,4 +1,10 @@
-//Authors: Matthew Scott Bronco #014966432, Kaye Reeves Bronco #014865383
+/** MenuActivity
+ * This activity contains the methods and objects that comprise the main menu screen and allow the
+ * user to navigate between the menu, the game, and the high score table and toggle the music on and
+ * off.
+ * @author  Matthew Scott Bronco #014966432, Kaye Reeves Bronco #014865383
+ * @since   2021-05-12
+ */
 
 package com.theguild.cs2450.concentration;
 

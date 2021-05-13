@@ -1,4 +1,8 @@
-//Author: Kaye Reeves Bronco #014865383
+/** AudioService
+ * A service to facilitate the playing of background music in the game.
+ * @author  Kaye Reeves Bronco #014865383
+ * @since   2021-05-12
+ */
 
 package com.theguild.cs2450.concentration;
 
@@ -22,12 +26,14 @@ public class AudioService extends android.app.IntentService {
         return Service.START_STICKY;
     }
 
+    //unused
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    //unused
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         String action = intent.getAction();
@@ -43,6 +49,10 @@ public class AudioService extends android.app.IntentService {
         stopMusic();
     }
 
+    /** playMusic()
+     * Begins the playback of background music.
+     * @param c The context of the application.
+     */
     public static void playMusic(android.content.Context c) {
         if (sMediaPlayer == null) {
             //sMediaPlayer = new android.media.MediaPlayer();
@@ -59,6 +69,9 @@ public class AudioService extends android.app.IntentService {
         }
     }
 
+    /** stopMusic()
+     * Stops the playback of background music.
+     */
     public static void stopMusic() {
         if (sMediaPlayer != null) {
             sSavedPosition = sMediaPlayer.getCurrentPosition();

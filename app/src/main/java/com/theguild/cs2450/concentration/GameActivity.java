@@ -1,4 +1,8 @@
-//Author: Matthew Scott Bronco #014966432
+/** GameActivity
+ * Contains the code for the Concentration game screen and its parts and methods.
+ * @author  Matthew Scott Bronco #014966432
+ * @since   2021-05-12
+ */
 
 package com.theguild.cs2450.concentration;
 
