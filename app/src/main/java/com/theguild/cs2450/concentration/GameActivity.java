@@ -153,6 +153,9 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    /** showCardCountDialog()
+     * Prompts the user to determine how many cards they would like to play with.
+     */
     private void showCardCountDialog () {
         mWhichDialogShowing = 1;
         CharSequence[] possCardAmounts = { "4", "6", "8", "10", "12", "14", "16", "18", "20" };
@@ -171,6 +174,9 @@ public class GameActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /** createGame()
+     * Initializes a new game.
+     */
     private void createGame() {
         randomizeCards();
         createCardViews();
@@ -178,6 +184,9 @@ public class GameActivity extends AppCompatActivity {
         displayCardGrid();
     }
 
+    /** randomizeCards()
+     * Randomizes the cards and their positions.
+     */
     private void randomizeCards() {
         // setup pool of possible words
         ArrayList<Integer> possWordIndexes = new ArrayList<>();
@@ -201,6 +210,9 @@ public class GameActivity extends AppCompatActivity {
         mIsCardLocked = new boolean[mCardAmount];
     }
 
+    /** createCardViews()
+     * Establishes the card view according to the device and number of cards.
+     */
     private void createCardViews() {
         // setup the size parameters for the cards customized for the device size
         DisplayMetrics dm = GameActivity.this.getResources().getDisplayMetrics();
@@ -226,6 +238,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /** addFlipListeners()
+     * Adds a listener to each card to determine when they should or should not flip.
+     */
     private void addFlipListeners() {
         for (ImageView view: mCardImageViews) {
             view.setOnClickListener(new View.OnClickListener() {
@@ -246,6 +261,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /** displayCardGrid()
+     * Displays the card grid view.
+     */
     private void displayCardGrid() {
         ImageAdapter imageAdapter = new ImageAdapter(mCardImageViews);
         GridView gridView = (GridView) findViewById(R.id.gridView);
@@ -253,6 +271,10 @@ public class GameActivity extends AppCompatActivity {
         gridView.setAdapter(imageAdapter);
     }
 
+    /** animateFlippingCard()
+     * Controls the flipping animation for a selected card.
+     * @param cardIndex The index of the card to flip.
+     */
     private void animateFlippingCard(int cardIndex) {
         Animator leftIn;
         Animator leftOut;
@@ -305,6 +327,10 @@ public class GameActivity extends AppCompatActivity {
         set.start();
     }
 
+    /** selectCard()
+     * Selects a card of the user's choice.
+     * @param index The index of the selected card.
+     */
     private void selectCard(int index) {
         if (mSelectedIndex1 == -1) {
             mSelectedIndex1 = index;
